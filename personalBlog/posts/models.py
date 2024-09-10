@@ -36,10 +36,6 @@ class Tag(models.Model):
 
 
 
-
-
-
-
 class BlogPost(models.Model):
     title = models.CharField(max_length=250, unique=True, verbose_name="Titre")
     slug = models.SlugField(max_length=250, unique=True, blank=True)

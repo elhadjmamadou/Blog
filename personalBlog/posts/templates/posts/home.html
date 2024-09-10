@@ -2,22 +2,30 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    <title>Accueil</title>
+    <title>Accueil - Mon Blog</title>
 {% endblock %}
 
 {% block content %}
-    <h1> Bienvenue sur notre site  ! </h1>
-
-    {% if show_login_signup %}
-        <p>Vous devez être connecté pour accéder à nos fonctionnalités.</p>
-        <a href="{% url 'posts:signup' %}">S'inscrire</a> | 
-        <a href="{% url 'posts:login' %}">Se connecter</a>
-    {% else %}
-
-    <form method="post" action="{% url 'posts:logout' %}">
-        {% csrf_token %}
-        <p>Bonjour, {{ user.username }} Bienvenue !</p>
-        <button type="submit">Se déconnecter</button>
-    </form> 
-    {% endif %}
+    <div class="hero-section" style="background-image: url('/static/images/hero-bg.jpg'); background-size: cover; padding: 50px; color: white; text-align: center;">
+        <h1>Bienvenue sur notre blog !</h1>
+        <p>Découvrez des articles passionnants et partagez vos idées avec notre communauté.</p>
+        {% if show_login_signup %}
+            <p>Vous devez être connecté pour accéder à nos fonctionnalités.</p>
+            <a class="btn btn-primary" href="{% url 'posts:signup' %}">S'inscrire</a>
+            <a class="btn btn-secondary" href="{% url 'posts:login' %}">Se connecter</a>
+        {% else %}
+            <form method="post" action="{% url 'posts:logout' %}">
+                {% csrf_token %}
+                <p>Bonjour, {{ user.username }} !</p>
+                <button class="btn btn-danger" type="submit">Se déconnecter</button>
+            </form>
+        {% endif %}
+    </div>
+    <div class="about-blog" style="padding: 20px; text-align: center;">
+        <h2>À propos de notre blog</h2>
+        <p>Notre blog est dédié à partager des connaissances, des idées et des expériences sur divers sujets. Que vous soyez passionné par la technologie, la cuisine, les voyages ou tout autre domaine, vous trouverez ici des articles intéressants et inspirants.</p>
+    </div>
+    
+        <!-- Ajoutez plus d'articles ici -->
+    </div>
 {% endblock %}
