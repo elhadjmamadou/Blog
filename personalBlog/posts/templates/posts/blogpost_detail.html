@@ -1,0 +1,57 @@
+<!-- templates/posts/blogpost_detail.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>{{ post.title }}</title>
+{% endblock %}
+
+{% block content %}
+    <article class="post-detail">
+        <h1>{{ post.title }}</h1>
+        {% if post.thumbnail %}
+            <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
+        {% else %}
+            <p>Aucune miniature disponible pour cet article.</p>
+        {% endif %}
+        <div>{{ post.content|linebreaks|safe }}</div>
+    </article>
+
+    <section class="comments">
+        <h2>Commentaires</h2>
+        {% if comments %}
+            <ul>
+                {% for comment in comments %}
+                    <li>
+                        <p>
+                            <strong>
+                                {% if comment.author %}
+                                    {{ comment.author.username }}
+                                {% else %}
+                                    Anonyme
+                                {% endif %}
+                            </strong> le {{ comment.created_on|date:"d M Y H:i" }} :
+                        </p>
+                        <p>{{ comment.content }}</p>
+                        {% if user.is_authenticated and comment.author == user %}
+                            <a href="{% url 'posts:comment_edit' comment.pk %}">Modifier</a>
+                            <a href="{% url 'posts:comment_delete' comment.pk %}">Supprimer</a>
+                        {% endif %}
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p>Aucun commentaire pour l'instant.</p>
+        {% endif %}
+
+        {% if user.is_authenticated %}
+            <h3>Ajouter un commentaire</h3>
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <button type="submit">Commenter</button>
+            </form>
+        {% else %}
+            <p>Vous devez être connecté pour ajouter un commentaire.</p>
+        {% endif %}
+    </section>
+{% endblock %}

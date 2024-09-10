@@ -1,0 +1,15 @@
+<!-- templates/comments/comment_form.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Modifier Commentaire</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Modifier Commentaire</h1>
+    <form method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <button type="submit">Enregistrer les modifications</button>
+    </form>
+{% endblock %}

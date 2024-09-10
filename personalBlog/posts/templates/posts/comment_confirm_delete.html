@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Supprimer Commentaire</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Supprimer Commentaire</h1>
+    <p>Êtes-vous sûr de vouloir supprimer ce commentaire ?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Supprimer</button>
+        <a href="{% url 'posts:post' comment.post.slug %}">Annuler</a> <!-- Utilisez `comment.post.slug` -->
+    </form>
+{% endblock %}

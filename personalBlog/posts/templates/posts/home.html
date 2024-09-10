@@ -1,0 +1,23 @@
+<!-- templates/home.html -->
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Accueil</title>
+{% endblock %}
+
+{% block content %}
+    <h1> Bienvenue sur notre site  ! </h1>
+
+    {% if show_login_signup %}
+        <p>Vous devez être connecté pour accéder à nos fonctionnalités.</p>
+        <a href="{% url 'posts:signup' %}">S'inscrire</a> | 
+        <a href="{% url 'posts:login' %}">Se connecter</a>
+    {% else %}
+
+    <form method="post" action="{% url 'posts:logout' %}">
+        {% csrf_token %}
+        <p>Bonjour, {{ user.username }} Bienvenue !</p>
+        <button type="submit">Se déconnecter</button>
+    </form> 
+    {% endif %}
+{% endblock %}

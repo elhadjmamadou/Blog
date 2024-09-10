@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Modifier le Profil</title>
+{% endblock %}
+
+{% block content %}
+    <h1>Modifier votre Profil</h1>
+
+    <form method="POST">
+        {% csrf_token %}
+        {{ user_form.as_p }}
+        <!-- {{ profile_form.as_p }} -->  <!-- Optionnel -->
+        <button type="submit">Sauvegarder les modifications</button>
+    </form>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    <title>Accueil du blog</title>
+{% endblock %}
+
+{% block content %}
+    <!-- Ajout de l'image avec une taille réduite au-dessus du titre -->
+    <img src="https://scontent.fcky3-1.fna.fbcdn.net/v/t39.30808-6/430611348_1517329235848610_2651402227237126374_n.jpg?_nc_cat=101&ccb=1-7&_nc_sid=6ee11a&_nc_ohc=vNDobNokcOcQ7kNvgFmkEkd&_nc_ht=scontent.fcky3-1.fna&oh=00_AYCNRtnOgXH4_20ej81MmEhsOKI_ExH2HyX3gbr4dLNj6w&oe=66E297F3" 
+        alt="Blog de Elhadj Mamadou Diallo" 
+        style="width: 150px; height: auto; display: block; margin: 10px auto;">
+
+    <h1>Le blog de Elhadj Mamadou Diallo</h1>
+
+    <!-- Formulaire de filtrage -->
+    <form method="GET" class="filter-form" style="margin-bottom: 20px;">
+        <input type="text" name="search" placeholder="Rechercher par mot-clé..." value="{{ request.GET.search }}" />
+
+        <select name="category">
+            <option value="">Toutes les catégories</option>
+            {% for category in categories %}
+                <option value="{{ category.slug }}" {% if request.GET.category == category.slug %}selected{% endif %}>
+                    {{ category.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <select name="tag">
+            <option value="">Tous les tags</option>
+            {% for tag in tags %}
+                <option value="{{ tag.slug }}" {% if request.GET.tag == tag.slug %}selected{% endif %}>
+                    {{ tag.name }}
+                </option>
+            {% endfor %}
+        </select>
+
+        <button type="submit" class="btn btn-submit">Filtrer</button>
+    </form>
+
+    {% for post in posts %}
+        <article class="post-item">
+            <div class="post-image">
+                {% if post.thumbnail %}
+                    <img src="{{ post.thumbnail.url }}" alt="{{ post.title }}" />
+                {% endif %}
+            </div>
+            <div class="post-content">
+                <div class="post-title">
+                    <h2>{{ post.title }}</h2>
+                    {% if request.user.is_authenticated and request.user == post.author %}
+                        <div>
+                            <a href="{% url 'posts:edit' slug=post.slug %}">Editer</a>
+                            <a href="{% url 'posts:delete' slug=post.slug %}">Supprimer</a>
+                        </div>
+                    {% endif %}
+                </div>
+
+                <h5 class="post-author">Publie par <i>{{ post.author.username }}</i> le {{ post.created_on|date:'j F Y' }}</h5>
+                <p class="post-excerpt">{{ post.content|safe|truncatewords:50 }}</p>
+
+                <form action="{% url 'posts:post' slug=post.slug %}">
+                    <button class="btn btn-submit">Lire l'article</button>
+                </form>
+            </div>
+        </article>
+    {% endfor %}
+{% endblock %}
