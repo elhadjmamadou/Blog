@@ -129,8 +129,18 @@ LOGOUT_REDIRECT_URL = '/'
 #si on est en production on collect les fichiers static ici
 
 # Apres on execute la commande " python manage.py collectstatic "
-STATIC_URL = "static/"
-STATIC_ROOT = os.path.join(BASE_DIR /"static")
-MEDIA_URL = "/media/"
-MEDIA_ROOT = BASE_DIR / 'fichier_media'
+# STATIC_URL = '/static/' 
+# STATICFILES_DIRS = [BASE_DIR / "static"]
+# STATIC_ROOT = BASE_DIR / "staticfiles"
+
+# MEDIA_URL = '/media/'
+# MEDIA_ROOT = BASE_DIR / 'media'
+
+STATIC_URL = "/static/"  # URL de base pour les fichiers statiques
+STATIC_ROOT = BASE_DIR / "staticfiles"  # Répertoire où collectstatic stocke tous les fichiers statiques
+STATICFILES_DIRS = [BASE_DIR / "static"]  # Répertoires supplémentaires pour les fichiers statiques
+
+MEDIA_URL = "/media/"  # URL de base pour les fichiers médias
+MEDIA_ROOT = BASE_DIR / "fichier_media"  # Répertoire où les fichiers médias sont stockés
+
 

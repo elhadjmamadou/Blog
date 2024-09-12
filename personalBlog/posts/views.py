@@ -13,6 +13,9 @@ from django.contrib.auth.mixins import UserPassesTestMixin, LoginRequiredMixin
 
 
 
+def single_view(request):
+    return render(request, 'posts/single.html')
+
 
 def home(request):
     context = {}
@@ -21,10 +24,6 @@ def home(request):
     return render(request, 'posts/home.html', context)
 
 
-# class SignUpView(CreateView):
-#     form_class = UserCreationForm
-#     template_name = 'registration/signup.html'
-#     success_url = reverse_lazy('posts:login')
 
 class SignUpView(CreateView):
     form_class = CustomUserCreationForm
