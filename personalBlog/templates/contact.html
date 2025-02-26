@@ -1,0 +1,106 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row">
+        <!-- Informations de contact -->
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h3 class="mb-0">Nos Coordonnées</h3>
+                </div>
+                <div class="card-body">
+                    <div class="mb-4">
+                        <h5><i class="fas fa-envelope me-2"></i>Email</h5>
+                        <p class="text-muted">contact@monblog.com</p>
+                    </div>
+                    <div class="mb-4">
+                        <h5><i class="fas fa-clock me-2"></i>Horaires</h5>
+                        <p class="text-muted">Réponse sous 24-48h</p>
+                    </div>
+                    <div class="mb-4">
+                        <h5><i class="fas fa-info-circle me-2"></i>Note</h5>
+                        <p class="text-muted">Nous répondons à toutes vos questions concernant le blog et ses articles.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulaire de contact -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="mb-0">Envoyez-nous un message</h2>
+                </div>
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }} alert-dismissible fade show" role="alert">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+                    
+                    <form method="post" class="needs-validation" novalidate>
+                        {% csrf_token %}
+                        {% for field in form %}
+                            <div class="form-group mb-3">
+                                <label for="{{ field.id_for_label }}" class="form-label fw-bold">
+                                    {{ field.label }}{% if field.field.required %} *{% endif %}
+                                </label>
+                                <div class="input-group">
+                                    {% if field.name == 'email' %}
+                                        <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                    {% elif field.name == 'name' %}
+                                        <span class="input-group-text"><i class="fas fa-user"></i></span>
+                                    {% elif field.name == 'subject' %}
+                                        <span class="input-group-text"><i class="fas fa-heading"></i></span>
+                                    {% elif field.name == 'message' %}
+                                        <span class="input-group-text"><i class="fas fa-comment"></i></span>
+                                    {% endif %}
+                                    {{ field }}
+                                </div>
+                                {% if field.errors %}
+                                    <div class="invalid-feedback d-block">
+                                        {{ field.errors }}
+                                    </div>
+                                {% endif %}
+                                {% if field.help_text %}
+                                    <small class="form-text text-muted">{{ field.help_text }}</small>
+                                {% endif %}
+                            </div>
+                        {% endfor %}
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary btn-lg">
+                                <i class="fas fa-paper-plane me-2"></i>Envoyer le message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // Activation de la validation des formulaires Bootstrap
+    (function () {
+        'use strict'
+        var forms = document.querySelectorAll('.needs-validation')
+        Array.prototype.slice.call(forms)
+            .forEach(function (form) {
+                form.addEventListener('submit', function (event) {
+                    if (!form.checkValidity()) {
+                        event.preventDefault()
+                        event.stopPropagation()
+                    }
+                    form.classList.add('was-validated')
+                }, false)
+            })
+    })()
+</script>
+{% endblock %}
+{% endblock %}

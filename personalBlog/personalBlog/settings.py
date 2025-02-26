@@ -23,7 +23,7 @@ SECRET_KEY = "django-insecure-p39_^m-ub&%8p18hp1fatv6u84d4_fk1f85wod^=x=4$@$8&-c
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["ElhadjMamadouDiallo.pythonanywhere.com","127.0.0.1"]
 
@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
+    'ckeditor',
+    'ckeditor_uploader',
 ]
 
 MIDDLEWARE = [
@@ -134,3 +136,20 @@ STATIC_ROOT = os.path.join(BASE_DIR /"static")
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / 'fichier_media'
 
+# Configuration Email pour le développement
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = 'houssary356@gmail.com'
+EMAIL_HOST_PASSWORD = 'krgv dghb qums hnoj'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+# Configuration CKEditor
+CKEDITOR_UPLOAD_PATH = "uploads/"
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Full',
+        'height': 300,
+        'width': '100%',
+    },
+}
